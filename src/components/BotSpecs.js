@@ -56,7 +56,7 @@ function BotSpecs({ bot }) {
                 console.log("connect this to a function that shows all bots")
               }
             >
-              Go Back
+              Back
             </button>
             <button
               className="ui button fluid"
