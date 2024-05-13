@@ -1,43 +1,18 @@
 import React, { useState, useEffect } from "react";
-import BotCard from "./BotCard";
+import BotSpecs from "./BotSpecs";
+//import BotCard from "./BotCard";
 
-function BotCollection({ handleClick, selectedBots, dischargeBot }) {
-  const [bots, setBots] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8002/bots")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch bots");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setBots(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
-
-  const handleBotClick = (bot) => {
-    handleClick(bot);
-  };
+function BotCollection(props) {
+  const bots = props
 
   return (
     <div className="ui four column grid">
       <div className="row">
-        {bots.map((bot) => (
-          <BotCard
-            key={bot.id}
-            bot={bot}
-            selectedBots={selectedBots}
-            handleClick={handleClick}
-            enlistBot={enlistBot}
-            dischargeBot={dischargeBot}
-            onClick={() => handleBotClick(bot)}
-          />
-        ))}
+        {bots.map((bot) => {
+           <BotSpecs 
+              key={bot.id}
+              bot={bot}/>
+        })}
         Collection of all the bots.
       </div>
     </div>

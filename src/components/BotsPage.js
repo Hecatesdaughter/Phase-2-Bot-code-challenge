@@ -4,52 +4,31 @@ import BotCollection from "./BotCollection";
 
 const url = "http://localhost:8002/bots";
 
-function BotsPage(
-) {
+function BotsPage() {
   const [bots, setBots] = useState([]);
-  const [botArmy, setBotArmy] = useState([]);
+  //const [botArmy, setBotArmy] = useState([]);
 
   useEffect(() => {
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => setBots(data));
+    const getBots = async () => {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(
+          "HTTP status " + response.status + ": " + response.statusText
+        )}
+
+      const data = await response.json();
+      console.log(data);
+      setBots(data);
+    };
+
+    getBots();
   }, []);
-
-  function enlistBot(bot) {
-    if (botArmy.some((b) => b.id === bot.id)) {
-      return;
-    }
-     setBotArmy([...botArmy, { ...bot, enlisted: true }]);
-  }
-
-  function releaseBot(bot) {
-    const newBotArmy = botArmy.map((b) =>
-    b.id === bot.id ? { ...b, enlisted: false } : b);
-    setBotArmy(newBotArmy);
-  }
-
-  function removeBot(e, bot) {
-    e.stopPropagation();
-
-  const newBots = bots.filter((b) => b.id !== bot.id);
-    const newBotArmy = botArmy.filter((b) => b.id !== bot.id);
-    setBots(newBots);
-    setBotArmy(newBotArmy);
-  }
 
   return (
     <div>
-      <YourBotArmy
-        botArmy={botArmy.filter((b) => b.enlisted)}
-        handleClick={releaseBot}
-        enlistBot={enlistBot}
-        dischargeBot={removeBot}
-      />
-      <BotCollection
-        bots={bots}
-        handleClick={enlistBot}
-        dischargeBot={removeBot}
-      />
+      <YourBotArmy />
+      <BotCollection bots={bots} />
     </div>
   );
 }
