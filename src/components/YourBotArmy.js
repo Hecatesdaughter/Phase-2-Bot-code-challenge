@@ -1,6 +1,7 @@
 import React from "react";
+import OneBot from "./OneBot";
 
-function YourBotArmy() {
+function YourBotArmy({botArmy}) {
   //your bot army code here...
 
   return (
@@ -9,10 +10,14 @@ function YourBotArmy() {
         <div className="row bot-army-row">
           {/*...and here...*/}
           Your Bot Army
+          {botArmy.map((bot) => {
+            return <OneBot key={bot.id} bot={bot} />
+          })}
         </div>
       </div>
     </div>
   );
 }
 
-export default YourBotArmy;
+export default YourBotArmy; 
+

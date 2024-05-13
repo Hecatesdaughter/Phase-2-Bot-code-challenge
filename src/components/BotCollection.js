@@ -1,21 +1,23 @@
 import React from "react";
-import BotSpecs from "./BotSpecs";
-//import BotCard from "./BotCard";
+//import BotSpecs from "./BotSpecs";
+import OneBot from "./OneBot";
 
-function BotCollection(props) {
-  const { bots } = props
+function BotCollection({ bots, setSelectedBot }) {
 
   return (
     <div className="ui four column grid">
       <div className="row">
+        {bots && bots.length > 0 && (
+         <>
         {bots.map((bot) => {
-           return(
-            <BotSpecs 
-              key={bot.id}
-              bot={bot}/>
-           )
-        })}
-        Collection of all the bots.
+              return (
+                <div key={bot.id} onClick={() => setSelectedBot(bot)}>
+                  <OneBot bot={bot} />
+                </div>
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );
